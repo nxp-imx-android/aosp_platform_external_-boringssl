@@ -895,6 +895,7 @@ static STACK_OF(TRUST_TOKEN) *
   if (count > ((size_t)-1) / sizeof(EC_RAW_POINT) ||
       count > ((size_t)-1) / sizeof(EC_SCALAR)) {
     OPENSSL_PUT_ERROR(TRUST_TOKEN, ERR_R_OVERFLOW);
+    sk_TRUST_TOKEN_free(ret);
     return 0;
   }
   EC_RAW_POINT *Tps = OPENSSL_malloc(count * sizeof(EC_RAW_POINT));

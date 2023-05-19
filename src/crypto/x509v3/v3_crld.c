@@ -201,10 +201,15 @@ static int set_reasons(ASN1_BIT_STRING **preas, char *value)
     const char *bnam;
     size_t i;
     int ret = 0;
+
+    if (*preas) {
+        // Duplicate "reasons" or "onlysomereasons" key.
+        OPENSSL_PUT_ERROR(X509V3, X509V3_R_INVALID_VALUE);
+        return 0;
+    }
+
     rsk = X509V3_parse_list(value);
     if (!rsk)
-        return 0;
-    if (*preas)
         return 0;
     for (i = 0; i < sk_CONF_VALUE_num(rsk); i++) {
         bnam = sk_CONF_VALUE_value(rsk, i)->name;

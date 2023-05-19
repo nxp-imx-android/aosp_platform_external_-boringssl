@@ -183,7 +183,7 @@ static X509_EXTENSION *do_ext_i2d(const X509V3_EXT_METHOD *method,
 {
     unsigned char *ext_der;
     int ext_len;
-    ASN1_OCTET_STRING *ext_oct;
+    ASN1_OCTET_STRING *ext_oct = NULL;
     X509_EXTENSION *ext;
     /* Convert internal representation to DER */
     if (method->it) {
@@ -214,6 +214,9 @@ static X509_EXTENSION *do_ext_i2d(const X509V3_EXT_METHOD *method,
 
  merr:
     OPENSSL_PUT_ERROR(X509V3, ERR_R_MALLOC_FAILURE);
+    if (ext_oct) {
+        ASN1_OCTET_STRING_free(ext_oct);
+    }
     return NULL;
 
 }
