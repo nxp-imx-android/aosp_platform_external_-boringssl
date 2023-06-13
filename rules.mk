@@ -88,6 +88,9 @@ MODULE_INCLUDES += $(LOCAL_DIR)/src/crypto
 
 MODULE_EXPORT_INCLUDES += $(LOCAL_DIR)/src/include
 
+# put the overriding implementation above so it can override the
+# "weak" implemetation, which is tricky.
+include trusty/hardware/nxp/user/lib/nxp_openssl_stub/rules.mk
 include trusty/user/base/lib/openssl-stubs/openssl-stubs-inc.mk
 
 include make/library.mk
