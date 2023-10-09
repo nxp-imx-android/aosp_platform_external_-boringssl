@@ -1,5 +1,7 @@
 /* Copyright (c) 2023, Google Inc.
  *
+ * Copyright NXP 2024
+ *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
@@ -31,8 +33,11 @@ void CRYPTO_sysrand(uint8_t *out, size_t requested) {
   }
 }
 
+void CRYPTO_sysrand_with_pr(uint8_t* out, size_t requested);
+
 void CRYPTO_sysrand_for_seed(uint8_t *out, size_t requested) {
-  CRYPTO_sysrand(out, requested);
+  /* generate 'prediction resistance' random */
+  CRYPTO_sysrand_with_pr(out, requested);
 }
 
 #endif  // OPENSSL_RAND_TRUSTY
